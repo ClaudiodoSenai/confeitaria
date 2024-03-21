@@ -1,10 +1,10 @@
 import React from 'react';
-import FlatListExample from './src/FlatListExample';
+import Cardapio from './src/Cardapio';
 
 function App(): React.JSX.Element {
   return (
     //<ScrollViewExample />
-    <FlatListExample/>
+    <Cardapio/>
   );
 }
 

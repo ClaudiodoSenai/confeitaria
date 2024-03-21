@@ -28,21 +28,27 @@ const dados: Item[] = [
 
 ];
 const logo = require('./assets/images/logo.png');
+const add = require('./assets/images/add.png')
 
 const renderItem = ({ item }: { item: Item }) => (
-    <TouchableOpacity style={styles.item}>
-        <Image source={item.imagem} style={styles.image} />
-        <View style={styles.text}>
-            <Text style={styles.tituloBolos}>{item.nome}</Text>
-            <Text style={styles.preco}>{item.preco}</Text>
-            {item.listaIngrediente.split(',').map((ingrediente, index) => (
-                <Text key={index} style={styles.textColor}>{ingrediente.trim()}</Text>
-            ))}
-        </View>
-    </TouchableOpacity>
+    <View style={styles.itemContainer}>
+        <TouchableOpacity style={styles.item}>
+            <Image source={item.imagem} style={styles.image} />
+            <View style={styles.text}>
+                <Text style={styles.tituloBolos}>{item.nome}</Text>
+                <Text style={styles.preco}>{item.preco}</Text>
+                {item.listaIngrediente.split(',').map((ingrediente, index) => (
+                    <Text key={index} style={styles.textColor}>{ingrediente.trim()}</Text>
+                ))}
+            </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addButton}>
+            <Image source={add} style={styles.addIcon} />
+        </TouchableOpacity>
+    </View>
 );
 
-function FlatListExample(): React.JSX.Element {
+function Cardapio(): React.JSX.Element {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="black" barStyle='light-content' />
@@ -85,6 +91,14 @@ function FlatListExample(): React.JSX.Element {
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <Image
+                        source={require('./assets/images/carrinho.png')}
+                        style={styles.footerIcon}
+                    />
+                </TouchableOpacity>
+
             </View>
         </View>
     );
@@ -159,8 +173,25 @@ const styles = StyleSheet.create({
         marginBottom:10,
         backgroundColor:'yellow',
         borderRadius:10
-        }
+        },
+        itemContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 8,
+            marginHorizontal: 8,
+        },
+        addButton: {
+            position: 'absolute',
+            right: 10,
+            bottom: 10,
+        },
+        addIcon: {
+            width: 30,
+            height: 30,
+        },
+    
 
 });
 
-export default FlatListExample;
+export default Cardapio;
