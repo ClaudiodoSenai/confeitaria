@@ -6,16 +6,16 @@ import axios from 'axios';
 const CadastroProduto: React.FC = () => {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [nome, setNome] = useState<string>('');
-    const [preco, setPreco] = useState<string>('');
-    const [ingredientes,setIngredientes] = useState<string>('');
+    const [telefone, setTelefone] = useState<string>('');
+    const [endereco,setEndereco] = useState<string>('');
     const[imagem,setImagem] = useState<any>('');
 
     const cadastrarProduto = async() =>{
         try{
         const formData = new FormData();
         formData.append('nome',nome);
-        formData.append('preco',preco);
-        formData.append('ingredientes',ingredientes);
+        formData.append('telefone',telefone);
+        formData.append('endereco',endereco);
         formData.append('imagem',{
             uri:imagem,
             type:'image/jpeg',
@@ -83,19 +83,19 @@ const CadastroProduto: React.FC = () => {
         <View style ={styles.form}>
             <TextInput
             style={styles.input}
-            placeholder="Nome do Produto"
+            placeholder="Nome"
             value={nome}
             onChangeText={setNome} />
                <TextInput
             style={styles.input}
-            placeholder="Preço"
-            value={preco}
-            onChangeText={setPreco} />
+            placeholder="Telefone"
+            value={telefone}
+            onChangeText={setTelefone} />
                <TextInput
             style={styles.input}
-            placeholder="Ingredientes"
-            value={ingredientes}
-            onChangeText={setIngredientes}
+            placeholder="endereco"
+            value={endereco}
+            onChangeText={setEndereco}
             multiline />
              <View style ={styles.alinhamentoImagemSelecionada}>
                 {imagem ? <Image source ={{uri:imagem}} style = {styles.imagemSelecionada} /> : null}
