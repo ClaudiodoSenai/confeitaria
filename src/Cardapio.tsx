@@ -1,66 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import axios from 'axios';
 
 interface Item {
     id: string;
     nome: string;
     preco: string;
-    listaIngrediente: string;
-    imagem: any;
+    ingredientes: string;
+    imagem: string; // Ajustado para string para corresponder ao tipo de dados
 }
 
-const dados: Item[] = [
-    { id: "1", nome: "Bolo Red Velvet", preco: "R$89,99", listaIngrediente: "Leite,açúcar, ovos,farinha de trigo, Chocolate em Pó,corante líquido cream cheese", imagem: require('./assets/images/redvelvet.png') },
-    { id: "2", nome: "Bolo de Brigadeiro", preco: "R$59,99", listaIngrediente: "Leite,manteiga, açúcar, ovos, farinha de trigo, Chocolate em Pó", imagem: require('./assets/images/brigadeiro.png') },
-    { id: "3", nome: "Bolo da Elsa", preco: "R$289,99", listaIngrediente: "Leite,ovos,farinha de trigo,açúcar,creme de leite", imagem: require('./assets/images/elsa.png') },
-    { id: "4", nome: "Bolo do Bob Esponja", preco: "R$185,99", listaIngrediente: "Leite, manteiga, açúcar, ovos,farinha de trigo, Chocolate em Pó, fermento, corante líquido vermelho", imagem: require('./assets/images/bobesponja.png') },
-    { id: "5", nome: "Bolo de casamento", preco: "R$500,86", listaIngrediente: "Leite, açúcar, ovos, farinha de trigo, corante líquido vermelho, açúcar de confeiteiro", imagem: require('./assets/images/casamento.png') },
-    { id: "6", nome: "Bolo do Urso", preco: "R$50,00", listaIngrediente: "Leite , suco de limão , manteiga, açúcar, ovos, essência de baunilha, farinha de trigo, Chocolate em Pó, fermento, corante líquido vermelho, cream cheese", imagem: require('./assets/images/urso.png') },
-    { id: "7", nome: "Bolo da Ladybug", preco: "R$90,00", listaIngrediente: "Leite, suco de limão , manteiga sem sal, açúcar, ovos,farinha de trigo,fermento em pó, corante líquido vermelho, cream cheese", imagem: require('./assets/images/ladybug.png') },
-    { id: "8", nome: "Bolo de Cenoura", preco: "R$20,00", listaIngrediente: "2 cenouras médias,óleo,ovos, Amido de Milho,farinha de trigo, fermento em pó, açúcar,chocolate ao leite, creme de leite ", imagem: require('./assets/images/cenoura.png') },
-    { id: "9", nome: "Bolo de Fubá", preco: "R$20,00", listaIngrediente: "Leite, ovos, essência de baunilha, farinha de trigo, Chocolate em Pó", imagem: require('./assets/images/fuba.png') },
-    { id: "10", nome: "Bolo de Feijão", preco: "R$9,99", listaIngrediente: "Leite,suco de feijão , manteiga sem sal, açúcar, ovos, farinha de trigo, corante líquido vermelho, açúcar de confeiteiro ", imagem: require('./assets/images/feijao.png') },
-    { id: "11", nome: "Bolo de Abobrinha", preco: "R$9,99", listaIngrediente: "Leite, Abobrinha, suco de limão , manteiga sem sal, açúcar, ovos, essência de baunilha, farinha de trigo, Chocolate em Pó, fermento em pó, corante líquido vermelho, cream cheese", imagem: require('./assets/images/abobrinha.png') },
-    { id: "12", nome: "Bolo de Abacaxi com Ameixa", preco: "R$69,99", listaIngrediente: "Leite, suco de laranja , ovos, essência de baunilha, farinha de trigo, Chocolate em Pó, fermento em pó, corante líquido vermelho, cream cheese", imagem: require('./assets/images/abacaxi.png') },
-    { id: "13", nome: "Bolo de Laranja", preco: "R$20,00", listaIngrediente: "Leite , suco de fubá , manteiga , açúcar, ovos, essência de baunilha, farinha de trigo, Chocolate em Pó, fermento em pó", imagem: require('./assets/images/laranja.png') },
-    { id: "14", nome: "Bolo de Limão", preco: "R$20,00", listaIngrediente: "Leite, farinha de trigo, Chocolate em Pó, fermento em pó, corante líquido vermelho, cream cheese", imagem: require('./assets/images/limao.png') },
-    { id: "15", nome: "Bolo de Churros", preco: "R$20,00", listaIngrediente: "Leite , corante líquido vermelho, cream cheese", imagem: require('./assets/images/churros.png') },
+const Cardapio = () => {
+    const [dados, setDados] = useState<Item[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
-];
-const logo = require('./assets/images/logo.png');
-const add = require('./assets/images/add.png')
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://10.137.11.225:8000/api/produtos/all');
+                console.log('Dados recebidos da API:', response.data);
+                setDados(response.data.data);
+            } catch (error) {
+                console.error('Erro ao buscar os dados:', error);
+                setError("Ocorreu um erro ao buscar os bolos");
+            }
+        };
 
-const renderItem = ({ item }: { item: Item }) => (
-    <View style={styles.itemContainer}>
-        <TouchableOpacity style={styles.item}>
-            <Image source={item.imagem} style={styles.image} />
-            <View style={styles.text}>
-                <Text style={styles.tituloBolos}>{item.nome}</Text>
-                <Text style={styles.preco}>{item.preco}</Text>
-                {item.listaIngrediente.split(',').map((ingrediente, index) => (
-                    <Text key={index} style={styles.textColor}>{ingrediente.trim()}</Text>
-                ))}
-            </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.addButton}>
-            <Image source={add} style={styles.addIcon} />
-        </TouchableOpacity>
-    </View>
-);
+        fetchData();
+    }, []);
 
-function Cardapio(): React.JSX.Element {
+    useEffect(() => {
+        console.log('Dados atualizados:', dados);
+    }, [dados]);
+
+    const renderItem = ({ item }: { item: Item }) => (
+        <View style={styles.itemContainer}>
+            <TouchableOpacity style={styles.item}>
+                <Image source={{uri: item.imagem}} style={styles.image} />
+                <View style={styles.text}>
+                    <Text style={styles.tituloBolos}>{item.nome}</Text>
+                    <Text style={styles.preco}>{item.preco}</Text>
+                    {item.ingredientes.split(',').map((ingrediente, index) => (
+                        <Text key={index} style={styles.textColor}>{ingrediente.trim()}</Text>
+                    ))}
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.addButton}>
+                <Image source={require('./assets/images/add.png')} style={styles.addIcon} />
+            </TouchableOpacity>
+        </View>
+    );
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="black" barStyle='light-content' />
             <View style={styles.header}>
-                <Image source={logo} style={styles.logo}/>
+                <Image source={require('./assets/images/logo.png')} style={styles.logo}/>
             </View>
 
             <FlatList
                 data={dados}
-                showsVerticalScrollIndicator={false}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
             />
 
             <View style={styles.footer}>
@@ -103,6 +104,7 @@ function Cardapio(): React.JSX.Element {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
