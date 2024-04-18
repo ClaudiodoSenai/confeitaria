@@ -10,7 +10,7 @@ interface Item {
     imagem: any;
 }
 
-const Cardapio = () => {
+const Carrinho = () => {
     const [dados, setDados] = useState<Item[]>([]);
     const [mensagemSucesso, setMensagemSucesso] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -23,7 +23,7 @@ const Cardapio = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get<Item[]>('http://10.137.11.225/api/produtos');
+                const response = await axios.get<Item[]>('http://10.137.11.225:8000/api/produtos/carrinho');
                 console.log('Dados recebidos da API:', response.data);
                 setDados(response.data);
                 console.log("dados da api" + dados);
@@ -43,18 +43,6 @@ const Cardapio = () => {
     }, []);
 
 
-    const adicionarAoCarrinho = (id: string) => {
-        setCarrinho(prevCarrinho => {
-            const novoCarrinho = { ...prevCarrinho };
-            if (novoCarrinho[id]) {
-                novoCarrinho[id]++;
-            } else {
-                novoCarrinho[id] = 1;
-            }
-            setMensagemSucesso('Produto adicionado com sucesso');
-            return novoCarrinho;
-        });
-    };
 
     const renderItem = ({ item }: { item: Item }) => (
         <View style={styles.itemContainer}>
@@ -258,4 +246,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Cardapio;
+export default Carrinho;

@@ -8,7 +8,7 @@ function App(): React.JSX.Element {
     //<ScrollViewExample />
      <Cardapio/>
     // <CadastroProduto/>
-    //<CadastroCliente/>
+    // <CadastroCliente/>
   );
 }
 
