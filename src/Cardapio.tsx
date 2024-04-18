@@ -5,7 +5,7 @@ import axios from 'axios';
 interface Item {
     id: string;
     nome: string;
-    preco: string;
+    preco: number;
     ingredientes: string;
     imagem: any;
 }
@@ -34,12 +34,6 @@ const Cardapio = () => {
         };
 
         fetchData();
-
-        const timer = setTimeout(() => {
-            setMensagemSucesso('');
-        }, 3000);
-
-        return () => clearTimeout(timer);
     }, []);
 
 
@@ -52,17 +46,27 @@ const Cardapio = () => {
                 novoCarrinho[id] = 1;
             }
             setMensagemSucesso('Produto adicionado com sucesso');
+            // Limpar a mensagem de sucesso após 3 segundos
+            setTimeout(() => {
+                setMensagemSucesso('');
+            }, 3000);
             return novoCarrinho;
         });
     };
 
-    const renderItem = ({ item }: { item: Item }) => (
+    const renderItem = ({ item }: { item: Item }) => {
+        const precoFormatado = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(item.preco)
+
+        return(
         <View style={styles.itemContainer}>
             <TouchableOpacity style={styles.item}>
                 <Image source={item.imagem ? { uri: item.imagem } : require('./assets/images/limao.png')} style={styles.image} />
                 <View style={styles.text}>
                     <Text style={styles.tituloBolos}>{item.nome}</Text>
-                    <Text style={styles.preco}>{item.preco}</Text>
+                    <Text style={styles.preco}>{precoFormatado}</Text>
                     <Text style={styles.textColor}>{item.ingredientes}</Text>
                 </View>
             </TouchableOpacity>
@@ -71,6 +75,7 @@ const Cardapio = () => {
             </TouchableOpacity>
         </View>
     );
+        }
     const totalCarrinho = Object.values(carrinho).reduce((total, quantidade) => total + quantidade, 0);
 
 

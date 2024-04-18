@@ -33,9 +33,11 @@ const CadastroCliente: React.FC = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
+            
             })
+            console.log('Cadastrado com sucesso')
         } catch (error) {
-            console.log(error);
+            console.log('Erro ao cadastrar o cliente');
         }
     }
 

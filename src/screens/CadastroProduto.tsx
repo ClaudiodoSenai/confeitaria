@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
 
@@ -74,7 +74,7 @@ const CadastroProduto: React.FC = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <StatusBar backgroundColor="#ffdab9" barStyle="light-content" />
             <View style={styles.header}>
                 <Image source={logo} style={styles.logo} />
@@ -154,7 +154,7 @@ const CadastroProduto: React.FC = () => {
             </View>
             
            
-        </View>
+            </ScrollView>
         
 
     );

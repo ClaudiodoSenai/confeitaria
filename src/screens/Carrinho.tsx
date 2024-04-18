@@ -1,3 +1,5 @@
+/*
+
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import axios from 'axios';
@@ -41,13 +43,21 @@ const Carrinho = () => {
 
         return () => clearTimeout(timer);
     }, []);
-
-
+    const adicionarAoCarrinho = async (id: string) => {
+        try {
+            const response = await axios.post('http://10.137.11.225:8000/api/carrinho', { id });
+            console.log('Item adicionado ao carrinho:', response.data);
+            setMensagemSucesso('Produto adicionado ao carrinho com sucesso');
+        } catch (error) {
+            console.error('Erro ao adicionar produto ao carrinho:', error);
+            setError("Ocorreu um erro ao adicionar o produto ao carrinho");
+        }
+    };
 
     const renderItem = ({ item }: { item: Item }) => (
         <View style={styles.itemContainer}>
             <TouchableOpacity style={styles.item}>
-                <Image source={item.imagem ? { uri: item.imagem } : require('./assets/images/limao.png')} style={styles.image} />
+                <Image source={item.imagem ? { uri: item.imagem } : require('../assets/images/limao.png')} style={styles.image} />
                 <View style={styles.text}>
                     <Text style={styles.tituloBolos}>{item.nome}</Text>
                     <Text style={styles.preco}>{item.preco}</Text>
@@ -55,19 +65,17 @@ const Carrinho = () => {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.addButton} onPress={() => adicionarAoCarrinho(item.id)}>
-                <Image source={require('./assets/images/add.png')} style={styles.addIcon} />
+                <Image source={require('../assets/images/add.png')} style={styles.addIcon} />
             </TouchableOpacity>
         </View>
     );
-    const totalCarrinho = Object.values(carrinho).reduce((total, quantidade) => total + quantidade, 0);
-
 
 
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="black" barStyle='light-content' />
             <View style={styles.header}>
-                <Image source={require('./assets/images/logo.png')} style={styles.logo} />
+                <Image source={require('../assets/images/logo.png')} style={styles.logo} />
             </View>
 
             <FlatList
@@ -75,51 +83,41 @@ const Carrinho = () => {
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
             />
-            {mensagemSucesso && (
-                <View style={styles.mensagemSucessoContainer}>
-                    <Text style={styles.mensagemSucessoText}>{mensagemSucesso}</Text>
-                </View>
-            )}
-
+           
             <View style={styles.footer}>
                 <TouchableOpacity>
                     <Image
-                        source={require('./assets/images/home.png')}
+                        source={require('../assets/images/home.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
                     <Image
-                        source={require('./assets/images/orders.png')}
+                        source={require('../assets/images/orders.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
                     <Image
-                        source={require('./assets/images/profile.png')}
+                        source={require('../assets/images/profile.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
                     <Image
-                        source={require('./assets/images/menu.png')}
+                        source={require('../assets/images/menu.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity>
                     <Image
-                        source={require('./assets/images/carrinho.png')}
+                        source={require('../assets/images/carrinho.png')}
                         style={styles.footerIcon}
                     />
-                    {totalCarrinho > 0 && (
-                        <View style={styles.carrinhoBadge}>
-                            <Text style={styles.carrinhoBadgeText}>{totalCarrinho}</Text>
-                        </View>
-                    )}
                 </TouchableOpacity>
 
             </View>
@@ -246,4 +244,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Carrinho;
+export default Carrinho; */
