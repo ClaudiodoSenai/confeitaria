@@ -22,7 +22,7 @@ const CadastroProduto: React.FC = () => {
                 name: new Date() + '.jpg'
             });
 
-            const response = await axios.post('http://10.137.11.225:8000/api/produtos/store', formData, {
+            const response = await axios.post('http://10.137.11.225/backMobile/public/api/produtos/store', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
