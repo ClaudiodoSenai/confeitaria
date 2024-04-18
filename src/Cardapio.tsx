@@ -7,13 +7,18 @@ interface Item {
     nome: string;
     preco: string;
     ingredientes: string;
-    imagem: string; // Ajustado para string para corresponder ao tipo de dados
+    imagem: string; 
 }
 
 const Cardapio = () => {
     const [dados, setDados] = useState<Item[]>([]);
     const [error, setError] = useState<string | null>(null);
-
+    
+    interface Carrinho {
+        [key: string]: number;
+    }
+    
+    const [carrinho, setCarrinho] = useState<Carrinho>({});
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,6 +38,17 @@ const Cardapio = () => {
         console.log('Dados atualizados:', dados);
     }, [dados]);
 
+    const adicionarAoCarrinho = (id:string) => {
+        setCarrinho(prevCarrinho => {
+            const novoCarrinho = { ...prevCarrinho };
+            if (novoCarrinho[id]) {
+                novoCarrinho[id]++;
+            } else {
+                novoCarrinho[id] = 1;
+            }
+            return novoCarrinho;
+        });
+    };
     const renderItem = ({ item }: { item: Item }) => (
         <View style={styles.itemContainer}>
             <TouchableOpacity style={styles.item}>
@@ -45,11 +61,14 @@ const Cardapio = () => {
                     ))}
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.addButton}>
-                <Image source={require('./assets/images/add.png')} style={styles.addIcon} />
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.addButton} onPress={() => adicionarAoCarrinho(item.id)}>
+    <Image source={require('./assets/images/add.png')} style={styles.addIcon} />
+</TouchableOpacity>
         </View>
     );
+    const totalCarrinho = Object.values(carrinho).reduce((total, quantidade) => total + quantidade, 0);
+
+    
 
     return (
         <View style={styles.container}>
@@ -61,7 +80,7 @@ const Cardapio = () => {
             <FlatList
                 data={dados}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.id}
             />
 
             <View style={styles.footer}>
@@ -93,12 +112,17 @@ const Cardapio = () => {
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Image
-                        source={require('./assets/images/carrinho.png')}
-                        style={styles.footerIcon}
-                    />
-                </TouchableOpacity>
+               <TouchableOpacity>
+    <Image
+        source={require('./assets/images/carrinho.png')}
+        style={styles.footerIcon}
+    />
+    {totalCarrinho > 0 && (
+        <View style={styles.carrinhoBadge}>
+            <Text style={styles.carrinhoBadgeText}>{totalCarrinho}</Text>
+        </View>
+    )}
+</TouchableOpacity>
 
             </View>
         </View>
@@ -191,7 +215,22 @@ const styles = StyleSheet.create({
         addIcon: {
             width: 30,
             height: 30,
+        },carrinhoBadge: {
+            position: 'absolute',
+            right: -6,
+            top: -3,
+            backgroundColor: 'red',
+            borderRadius: 10,
+            width: 20,
+            height: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
         },
+        carrinhoBadgeText: {
+            color: 'white',
+            fontWeight: 'bold',
+        }
+        
     
 
 });

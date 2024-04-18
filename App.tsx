@@ -6,8 +6,8 @@ import CadastroCliente from './src/screens/ClienteCadastro';
 function App(): React.JSX.Element {
   return (
     //<ScrollViewExample />
-    <Cardapio/>
-    //<CadastroProduto/>
+     <Cardapio/>
+    // <CadastroProduto/>
     //<CadastroCliente/>
   );
 }
