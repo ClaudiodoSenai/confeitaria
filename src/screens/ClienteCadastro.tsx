@@ -3,7 +3,7 @@ import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View,S
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
 
-const CadastroCliente: React.FC = () => {
+const ClienteCadastro = () => {
     const [Clientes, setClientes] = useState<Cliente[]>([]);
     const [nome, setNome] = useState<string>('');
     const [telefone, setTelefone] = useState<string>('');
@@ -14,7 +14,7 @@ const CadastroCliente: React.FC = () => {
     const [foto, setFoto] = useState<any>('');
     
     const logo = require('../assets/images/logo.png');
-    const cadastrarCliente = async () => {
+    const CadastrarCliente = async () => {
         try {
             const formData = new FormData();
             formData.append('nome', nome);
@@ -134,7 +134,7 @@ const CadastroCliente: React.FC = () => {
                 <TouchableOpacity style={styles.imageButton} onPress={abrirCamera}>
                     <Text style={styles.imageButtonText}>Tirar Foto</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton} onPress={cadastrarCliente}>
+                <TouchableOpacity style={styles.imageButton} onPress={CadastrarCliente}>
                     <Text style={styles.imageButtonText}>Cadastrar Cliente</Text>
                 </TouchableOpacity>
                 
@@ -272,4 +272,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default CadastroCliente;
+export default ClienteCadastro;

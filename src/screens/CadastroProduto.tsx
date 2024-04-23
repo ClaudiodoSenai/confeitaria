@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
+import { useNavigation } from "@react-navigation/native";
 
-const CadastroProduto: React.FC = () => {
+const CadastroProduto = () => {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [nome, setNome] = useState<string>('');
     const [preco, setPreco] = useState<string>('');
@@ -72,6 +73,7 @@ const CadastroProduto: React.FC = () => {
             }
         })
     }
+const navigation = useNavigation();
 
     return (
         <ScrollView style={styles.container}>
@@ -116,14 +118,14 @@ const CadastroProduto: React.FC = () => {
             </View>
 
             <View style={styles.footer}>
-                <TouchableOpacity>
+                <TouchableOpacity >
                     <Image
                         source={require('../assets/images/home.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity >
                     <Image
                         source={require('../assets/images/orders.png')}
                         style={styles.footerIcon}

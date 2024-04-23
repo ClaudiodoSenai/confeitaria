@@ -1,16 +1,21 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Cardapio from './src/Cardapio';
 import CadastroProduto from './src/screens/CadastroProduto';
-import CadastroCliente from './src/screens/ClienteCadastro';
-//import Carrinho from './src/screens/Carrinho';
+import ClienteCadastro from './src/screens/ClienteCadastro';
 
-function App(): React.JSX.Element {
+const Stack = createStackNavigator();
+
+function App(): React.ReactElement {
   return (
-    //<ScrollViewExample />
-    <Cardapio/>
-    //<CadastroProduto/>
-   //<CadastroCliente/>
-    // <Carrinho />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Cardapio' component={Cardapio} options={{headerShown: false}}/>
+        <Stack.Screen name='CadastroProduto' component={CadastroProduto} options={{headerShown: false}}/>
+        <Stack.Screen name='ClienteCadastro' component={ClienteCadastro} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

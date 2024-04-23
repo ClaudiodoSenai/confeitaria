@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 interface Item {
     id: string;
@@ -79,7 +80,7 @@ const Cardapio = () => {
     const totalCarrinho = Object.values(carrinho).reduce((total, quantidade) => total + quantidade, 0);
 
 
-
+const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="black" barStyle='light-content' />
@@ -99,27 +100,26 @@ const Cardapio = () => {
             )}
 
             <View style={styles.footer}>
-                <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('Cardapio')}>
                     <Image
-                        source={require('./assets/images/home.png')}
+                        source={require('../assets/images/home.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('cadastroCliente')}>
                     <Image
-                        source={require('./assets/images/orders.png')}
+                        source={require('../assets/images/orders.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('cadastroProduto')}>
                     <Image
-                        source={require('./assets/images/profile.png')}
+                        source={require('../assets/images/profile.png')}
                         style={styles.footerIcon}
                     />
                 </TouchableOpacity>
-
                 <TouchableOpacity>
                     <Image
                         source={require('./assets/images/menu.png')}
